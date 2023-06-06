@@ -52,11 +52,14 @@ public class DemoExternalAccountImp {
 
     public static TransactionContainer mockTransactionResponse(ConnectorMessage connectorMessage, String accounts)
             throws JsonProcessingException {
-        // logger.info(connectorMessage, "Creating transaction container for all external accounts");
+        // logger.info(connectorMessage, "Creating transaction container for all
+        // external accounts");
 
-        // Returning a Transaction Container, using passed in list of external accounts for the accountId array
+        // Returning a Transaction Container, using passed in list of external accounts
+        // for the accountId array
         return jsonMapper.readValue(
-                "{\"transactionMessage\":{\"messageContext\":{\"fiId\":\"symxchange\",\"includeBlankFields\":true,\"includeZeroNumerics\":true},\"transactionFilter\":{\"accountIdList\":{\"accountId\":[" + accounts + "]}},\"transactionList\":{\"transaction\":[]}}}",
+                "{\"transactionMessage\":{\"messageContext\":{\"fiId\":\"symxchange\",\"includeBlankFields\":true,\"includeZeroNumerics\":true},\"transactionFilter\":{\"accountIdList\":{\"accountId\":["
+                        + accounts + "]}},\"transactionList\":{\"transaction\":[]}}}",
                 TransactionContainer.class);
     }
 
@@ -116,7 +119,6 @@ public class DemoExternalAccountImp {
             date.setYear(1970);
             deposit.setCloseDate(date);
         } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
         }
         return deposit;
     }
@@ -175,7 +177,6 @@ public class DemoExternalAccountImp {
             date.setYear(1970);
             loan.setCloseDate(date);
         } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
         }
         return loan;
     }
@@ -207,7 +208,6 @@ public class DemoExternalAccountImp {
             transaction.setDescription("This is a fake transaction");
             transaction.setSource(TransactionSource.BILL_PAY);
         } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
         }
 
         ValuePair vp = new ValuePair();
@@ -264,13 +264,15 @@ public class DemoExternalAccountImp {
         ResponseStatusMessage responseStatusMessage = mspUtil.getSuccessResponse();
         connectorMessage.setResponseStatus(responseStatusMessage);
 
-        // Get incoming parameters in order to retrieve all external accounts this connector has created / edited
+        // Get incoming parameters in order to retrieve all external accounts this
+        // connector has created / edited
         Map<String, String> params = getParams(connectorMessage);
         logger.info(connectorMessage, "PARAMS:");
         logger.info(connectorMessage, jsonMapper.writeValueAsString(params));
         // Initializing comma seperated string of accountId's
         String accountsString = "";
-        // Initializing list of create / edited external accounts to be iterated over below
+        // Initializing list of create / edited external accounts to be iterated over
+        // below
         ArrayList<String> accountsArr = new ArrayList<String>();
         // Loop over params
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -279,10 +281,11 @@ public class DemoExternalAccountImp {
                 // Add value to accounts array
                 accountsArr.add(entry.getValue());
                 // Create accounts string, handling comma seperation and quotes
-                accountsString = accountsString.equals("") ? "\"" + entry.getValue() + "\"" :  accountsString + ", \"" + entry.getValue() + "\"";
+                accountsString = accountsString.equals("") ? "\"" + entry.getValue() + "\""
+                        : accountsString + ", \"" + entry.getValue() + "\"";
             }
         }
-            
+
         // Create transaction container for all external accounts
         ExternalTransactionContainer externalTransactionContainer = new ExternalTransactionContainer();
         TransactionResult transactionResult = new TransactionResult();
@@ -292,14 +295,15 @@ public class DemoExternalAccountImp {
         TransactionFilter transactionFilter = new TransactionFilter();
         AccountIdList accountIdList = new AccountIdList();
 
-        // // create a new transaction for each external account and add to transaction container
+        // // create a new transaction for each external account and add to transaction
+        // container
         for (String accountId : accountsArr) {
             transactionList.getTransaction()
-                .add(createTransaction(connectorMessage, accountId));
+                    .add(createTransaction(connectorMessage, accountId));
             accountIdList.getAccountId().add(accountId);
             transactionFilter.setAccountIdList(accountIdList);
         }
-        
+
         transactionMessage.setTransactionList(transactionList);
         transactionMessage.setTransactionFilter(transactionFilter);
 

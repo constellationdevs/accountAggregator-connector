@@ -46,6 +46,7 @@ public class ConnectorControllerBase {
     public void setBaseParamsSupplier(BaseParamsSupplier supplier) {
         this.baseParamsSupplier = supplier;
     }
+
     /**
      * Boilerplate method for handling the connector message
      * 

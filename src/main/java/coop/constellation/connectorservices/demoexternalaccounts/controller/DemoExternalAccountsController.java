@@ -9,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-
-
-// import java.io.IOException;
-
 @RestController
 @RequestMapping("/externalConnector/devAcctAgg/1.0")
 public class DemoExternalAccountsController {
@@ -24,7 +20,6 @@ public class DemoExternalAccountsController {
         this.service = service;
     }
 
-    
     @GetMapping("/awsping")
     public String getAWSPing() {
         return "{ping: 'pong'}";
@@ -36,14 +31,12 @@ public class DemoExternalAccountsController {
         String method = "DemoExternalAccountsController::getExternalAccounts";
         logger.info(connectorMessage, "Invoked " + method);
 
-
         try {
             service.init(connectorMessage);
             connectorMessage = service.getExternalAccounts(connectorMessage);
             logger.info(connectorMessage, method + " process is finished");
         } catch (Exception e) {
             logger.error(connectorMessage, method + " caught IOException: " + e.getMessage());
-            e.printStackTrace();
         }
         return connectorMessage;
     }
@@ -59,7 +52,6 @@ public class DemoExternalAccountsController {
             logger.info(connectorMessage, method + " process is finished");
         } catch (Exception e) {
             logger.error(connectorMessage, method + " caught IOException: " + e.getMessage());
-            e.printStackTrace();
         }
         return connectorMessage;
     }
