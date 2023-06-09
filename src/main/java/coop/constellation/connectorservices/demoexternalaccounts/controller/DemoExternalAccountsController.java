@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/externalConnector/devAcctAgg/1.0")
+@RequestMapping("/externalConnector/AccountAggregator/1.0")
 public class DemoExternalAccountsController {
     ConnectorLogging logger = new ConnectorLogging();
     DemoExternalAccountImp service;
