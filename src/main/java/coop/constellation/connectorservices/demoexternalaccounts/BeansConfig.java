@@ -36,9 +36,4 @@ public class BeansConfig {
         return () -> Map.of("localCpConnectionInitSql", "SET TIME ZONE 'UTC';");
     }
 
-    @Bean
-    ConnectorConfig connectorConfig() {
-        return new ConnectorConfig();
-    }
-
 }
