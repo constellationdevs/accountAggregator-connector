@@ -4,6 +4,9 @@ HELP.md
 deploy/
 !.mvn/wrapper/maven-wrapper.jar
 
+### VS CODE ###
+/.vscode
+
 ### STS ###
 .apt_generated
 .classpath
